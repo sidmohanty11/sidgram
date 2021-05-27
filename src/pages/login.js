@@ -14,7 +14,8 @@ const Login = () => {
 
     const handleLogin =async (e) => {
       e.preventDefault();
-
+      //sign in and push the user to the dashboard 
+      //if everything went well else reset and show the error message
       try {
         await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
         history.action(DASHBOARD);

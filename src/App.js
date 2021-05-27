@@ -5,6 +5,7 @@ import * as ROUTES from './constants/routes';
 const Login = lazy(() => import("./pages/login"));
 const Signup = lazy(() => import("./pages/signup"));
 const Notfound = lazy(() => import("./pages/notfound"));
+const Dashboard = lazy(() => import("./pages/dashboard"));
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route exact path={ROUTES.SIGN_UP}>
             <Signup />
+          </Route>
+          <Route exact path={ROUTES.DASHBOARD}>
+            <Dashboard />
           </Route>
           <Route>
             <Notfound />
