@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
+import { DASHBOARD, SIGN_UP } from '../constants/routes';
 
 const Login = () => {
     const history = useHistory();
@@ -11,8 +12,17 @@ const Login = () => {
     const [error, setError] = useState('');
     const isInvalid = password === '' || emailAddress === '';
 
-    const handleLogin = () => {
-        
+    const handleLogin =async (e) => {
+      e.preventDefault();
+
+      try {
+        await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+        history.action(DASHBOARD);
+      } catch (err) {
+        setEmailAddress('');
+        setPassword('');
+        setError(err.message);
+      }
     };
 
     useEffect(() => {
@@ -63,7 +73,12 @@ const Login = () => {
             </form>
           </div>
           <div className="flex rounded justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary">
-                    <p className="text-sm">Don't have an account?{' '}<Link to="/signup" className="font-bold text-blue-medium">Sign up</Link> </p>
+            <p className="text-sm">
+              Don't have an account?{" "}
+              <Link to={SIGN_UP} className="font-bold text-blue-medium">
+                Sign up
+              </Link>{" "}
+            </p>
           </div>
         </div>
       </div>
