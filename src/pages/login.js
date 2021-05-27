@@ -18,7 +18,7 @@ const Login = () => {
       //if everything went well else reset and show the error message
       try {
         await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-        history.action(DASHBOARD);
+        history.push(DASHBOARD);
       } catch (err) {
         setEmailAddress('');
         setPassword('');
