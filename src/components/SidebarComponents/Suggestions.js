@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { getSuggestedProfiles } from "../../services/firebase";
-import SuggestedProfile from './SuggestedProfile';
+import SuggestedProfile from "./SuggestedProfile";
 
-const Suggestions = ({ userId, following }) => {
+const Suggestions = ({ userId, following, loggedInUserDocId }) => {
   const [profiles, setProfiles] = useState(null);
 
   //go ahead and get the suggested profiles!!!
   useEffect(() => {
     async function suggestedProfiles() {
-        const response = await getSuggestedProfiles(userId, following);
+      const response = await getSuggestedProfiles(userId, following);
       setProfiles(response);
     }
     if (userId) {
@@ -29,10 +29,11 @@ const Suggestions = ({ userId, following }) => {
         {profiles.map((profile) => (
           <SuggestedProfile
             key={profile.docId}
-            userDocId={profile.docId}
+            profileDocId={profile.docId}
             username={profile.username}
             profileId={profile.userId}
             userId={userId}
+            loggedInUserDocId={loggedInUserDocId}
           />
         ))}
       </div>
@@ -45,6 +46,7 @@ const Suggestions = ({ userId, following }) => {
 Suggestions.propTypes = {
   userId: propTypes.string,
   following: propTypes.array,
+  loggedInUserDocId: propTypes.string,
 };
 
 export default Suggestions;

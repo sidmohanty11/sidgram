@@ -1,7 +1,7 @@
 import { firebase, FieldValue } from "../lib/firebase";
 
-//function to determine if the user already exists or not ->
-//returns an array of [true or false], based on that we can provide an error state
+//* function to determine if the user already exists or not ->
+//* returns an array of [true or false], based on that we can provide an error state
 export async function doesUsernameExist(username) {
   const result = await firebase
     .firestore()
@@ -12,7 +12,7 @@ export async function doesUsernameExist(username) {
   return result.docs.map((user) => user.data().length > 0);
 }
 
-//function to get the user object by comparing the userId in the object and the payload userId!
+//* function to get the user object by comparing the userId in the object and the payload userId!
 export async function getUserByUserId(userId) {
   const result = await firebase
     .firestore()
@@ -25,8 +25,8 @@ export async function getUserByUserId(userId) {
   return user;
 }
 
-//gets the suggested profiles to follow for the user, basically goes through the followers of user and doesn't
-//show the user to follow the already followed id but shows the ids which aren't being followed
+//* gets the suggested profiles to follow for the user, basically goes through the followers of user and doesn't
+//* show the user to follow the already followed id but shows the ids which aren't being followed
 export async function getSuggestedProfiles(userId, following) {
   const result = await firebase.firestore().collection("users").limit(10).get();
 
@@ -36,4 +36,42 @@ export async function getSuggestedProfiles(userId, following) {
       (profile) =>
         profile.userId !== userId && !following.includes(profile.userId)
     );
+}
+
+//* function to get the logged in user and update its following if he/she clicked the follow button at the suggestion!
+//* +1 following of the logged in user if he/she doesn't already follow the account
+//* if he/she already follows the person? => UNFOLLOW!!! *_*
+export async function updateLoggedInUserFollowing(
+  loggedInUserDocId, //? currently logged in user (me)
+  profileId, //? user that I request to follow or unfollow
+  isFollowingProfile //? true/false (am I currently following this profile?)
+) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(loggedInUserDocId)
+    .update({
+      following: isFollowingProfile
+        ? FieldValue.arrayRemove(profileId)
+        : FieldValue.arrayUnion(profileId),
+    });
+}
+
+//* function to get the user that has been clicked to be followed and update his/her followers!
+//* +1 follower of the profile clicked to be followed!
+//* -1 follower of the profile if clicked unfollow, right? *_*
+export async function updateFollowedUserFollowers(
+  profileDocId, //? user that I request to follow or unfollow
+  loggedInUserDocId, //? currently logged in user (me)
+  isFollowingProfile //? true/false (am I currently following this profile?)
+) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(profileDocId)
+    .update({
+      followers: isFollowingProfile
+        ? FieldValue.arrayRemove(loggedInUserDocId)
+        : FieldValue.arrayUnion(loggedInUserDocId),
+    });
 }

@@ -1,16 +1,29 @@
 import React from "react";
 import propTypes from "prop-types";
 import { Link } from "react-router-dom";
+import {
+  updateFollowedUserFollowers,
+  updateLoggedInUserFollowing,
+} from "../../services/firebase";
 
-const SuggestedProfile = ({ userDocId, username, profileId, userId }) => {
-    const [followed, setFollowed] = React.useState(false);
-    
-    async function handleFollowUser() {
-        setFollowed(true);
+const SuggestedProfile = ({
+  profileDocId,
+  username,
+  profileId,
+  userId,
+  loggedInUserDocId,
+}) => {
+  const [followed, setFollowed] = React.useState(false);
 
-        // update the following array of the logged in user! -> +1
-        // update the followers array of the user who has been followed! -> +1
-    }
+  async function handleFollowUser() {
+    setFollowed(true);
+
+    // TODO update the following array of the logged in user! -> +1
+    await updateLoggedInUserFollowing(loggedInUserDocId, profileId, false);
+    // TODO update the followers array of the user who has been followed! -> +1
+    await updateFollowedUserFollowers(profileDocId, userId, false);
+    //false because in the suggestions we won't get any profile that we have already followed!
+  }
 
   return !followed ? (
     <div className="flex flex-row items-center align-items justify-between">
@@ -38,10 +51,11 @@ const SuggestedProfile = ({ userDocId, username, profileId, userId }) => {
 };
 
 SuggestedProfile.propTypes = {
-  userDocId: propTypes.string,
+  profileDocId: propTypes.string,
   username: propTypes.string,
   profileId: propTypes.string,
   userId: propTypes.string,
+  loggedInUserDocId: propTypes.string,
 };
 
 export default SuggestedProfile;
