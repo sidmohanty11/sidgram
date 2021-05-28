@@ -27,12 +27,12 @@ const Header = () => {
               <>
                 <div className="mr-2">
                   <Link to={ROUTES.DASHBOARD}>
-                    <img src="./images/home.png" alt="" />
+                    <img src="./images/home.png" alt="to dashboard" />
                   </Link>
                 </div>
                 <div className="mr-2">
                   <Link to={ROUTES.MESSAGE}>
-                    <img src="./images/send.png" alt="" />
+                    <img src="./images/send.png" alt="to messages" />
                   </Link>
                 </div>
                 <div className="mr-2">
@@ -46,7 +46,7 @@ const Header = () => {
                       }
                     }}
                   >
-                    <img src="./images/logout.png" alt="" />
+                    <img src="./images/logout.png" alt="logout" />
                   </button>
                 </div>
                 <div className="flex items-center cursor-pointer">
