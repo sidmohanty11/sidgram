@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import propTypes from "prop-types";
 import { formatDistance } from "date-fns";
 import { Link } from "react-router-dom";
+import AddComment from "./AddComment";
 
 const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
   const [comments, setComments] = useState(allComments);
@@ -38,7 +39,13 @@ const Comments = ({ docId, comments: allComments, posted, commentInput }) => {
         <p className="text-gray-base uppercase text-xs mt-2">
           {formatDistance(posted, new Date())} ago
         </p>
-      </div>
+          </div>
+          <AddComment
+              docId={docId}
+              comments={comments}
+              setComments={setComments}
+              commentInput={commentInput}
+          />
     </>
   );
 };
