@@ -124,7 +124,6 @@ export async function getUserPhotosByUsername(username) {
     .collection("photos")
     .where("userId", "==", user.userId)
     .get();
-
   return result.docs.map((item) => ({ ...item.data(), docId: item.id }));
 }
 

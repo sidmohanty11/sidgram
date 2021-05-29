@@ -40,7 +40,7 @@ const SuggestedProfile = ({
       <button
         className="text-xs font-bold text-blue-medium"
         type="button"
-        onClick={() => {}}
+        onClick={() => { handleFollowUser();}}
       >
         Follow
       </button>
