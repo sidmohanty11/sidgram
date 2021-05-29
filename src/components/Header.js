@@ -16,7 +16,7 @@ const Header = () => {
               <Link to={ROUTES.DASHBOARD}>
                 <img
                   className="mt-2 w-2/12"
-                  src="./images/instagram-logo1.png"
+                  src="/images/instagram-logo1.png"
                   alt="Instagram"
                 />
               </Link>
@@ -27,12 +27,12 @@ const Header = () => {
               <>
                 <div className="mr-2">
                   <Link to={ROUTES.DASHBOARD}>
-                    <img src="./images/home.png" alt="to dashboard" />
+                    <img src="/images/home.png" alt="to dashboard" />
                   </Link>
                 </div>
                 <div className="mr-2">
                   <Link to={ROUTES.MESSAGE}>
-                    <img src="./images/send.png" alt="to messages" />
+                    <img src="/images/send.png" alt="to messages" />
                   </Link>
                 </div>
                 <div className="mr-2">
@@ -46,7 +46,7 @@ const Header = () => {
                       }
                     }}
                   >
-                    <img src="./images/logout.png" alt="logout" />
+                    <img src="/images/logout.png" alt="logout" />
                   </button>
                 </div>
                 <div className="flex items-center cursor-pointer">

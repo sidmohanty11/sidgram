@@ -6,12 +6,12 @@ import { UserContext } from "./context/user";
 
 import ProtectedRoute from "./helpers/protected-route";
 import IsUserLoggedIn from "./helpers/is-user-logged-in";
-import Profile from "./components/Profile";
 
 const Login = lazy(() => import("./pages/login"));
 const Signup = lazy(() => import("./pages/signup"));
 const Notfound = lazy(() => import("./pages/notfound"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
+const Profile = lazy(() => import("./pages/profile"));
 
 function App() {
   const { user } = useAuthListener();
