@@ -24,7 +24,9 @@ const Header = ({
   const handleToggleFollow = () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
     setFollowerCount({
-      followerCount: isFollowingProfile ? Number(followers - 1) : Number(followers + 1),
+      followerCount: isFollowingProfile
+        ? followers.length - 1
+        : followers.length + 1,
     });
   };
 
@@ -34,7 +36,7 @@ const Header = ({
         user.username,
         profileUserId
       );
-      setIsFollowingProfile(isFollowing);
+      setIsFollowingProfile(!!isFollowing);
     };
 
     if (user.username && profileUserId) {
@@ -57,9 +59,15 @@ const Header = ({
           <div className="container flex items-center">
             {user.username ? (
               <>
-                <p className="text-2xl mx-4">{visitingUsername}</p>
+                <p className="text-2xl mx-10">{visitingUsername}</p>
                 {activeBtnFollow && (
                   <button
+                    type="button"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleToggleFollow();
+                      }
+                    }}
                     onClick={handleToggleFollow}
                     className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
                   >
@@ -70,6 +78,29 @@ const Header = ({
             ) : (
               <Skeleton className="mx-4" count={1} height={50} width={140} />
             )}
+          </div>
+          <div className="container flex mt-4">
+            {followers === undefined || following === undefined ? (
+              <Skeleton count={1} height={24} width={677} />
+            ) : (
+              <>
+                <p className="mx-10">
+                  <span className="font-bold">{photosCount}</span> photos
+                </p>
+                <p className="mx-10">
+                  <span className="font-bold">{followers.length}</span>
+                  {` `}
+                  {followers.length === 1 ? `follower` : `followers`}
+                </p>
+                <p className="mx-10">
+                  <span className="font-bold">{following.length}</span>{" "}
+                  following
+                </p>
+              </>
+            )}
+          </div>
+          <div className="container mt-4">
+            <p className="font-medium mx-10">{!fullName ? <Skeleton count={1} height={24} width={24} /> : fullName}</p>
           </div>
         </div>
       </div>
