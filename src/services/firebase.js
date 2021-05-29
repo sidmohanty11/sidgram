@@ -144,4 +144,25 @@ export async function isUserFollowingProfile(
     docId: item.id,
   }));
 
+  return response.userId;
+}
+
+export async function toggleFollow(
+  isFollowingProfile,
+  activeUserDocId,
+  profileDocId,
+  profileUserId,
+  followingUserId
+) {
+  await updateLoggedInUserFollowing(
+    activeUserDocId, //? my doc ID
+    profileUserId, //? the user I followed USERID
+    isFollowingProfile //? is already following?
+  );
+
+  await updateFollowedUserFollowers(
+    profileDocId, //? my DOC ID
+    followingUserId, //? the user I followed USERID
+    isFollowingProfile //? is already following?
+  );
 }
