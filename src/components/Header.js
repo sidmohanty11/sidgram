@@ -69,7 +69,7 @@ const Header = () => {
                     Log In
                   </button>
                 </Link>
-                <Link to={ROUTES.LOGIN}>
+                <Link to={ROUTES.SIGN_UP}>
                   <button
                     type="button"
                     className="font-bold text-sm rounded text-blue-medium w-20 h-8"
