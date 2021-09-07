@@ -1,7 +1,7 @@
 ### The Instagram Clone - React & Firebase
 
-### ```npm install```
 ### ```cd the-instagram```
+### ```npm install```
 ### ```npm start```
 
 ### Work
