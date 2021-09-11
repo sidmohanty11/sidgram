@@ -9,6 +9,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func Register(c echo.Context) error {
+	return c.JSON(http.StatusAccepted, "")
+}
+
 func Login(c echo.Context) error {
 	// username := c.FormValue("username")
 	// password := c.FormValue("password")
@@ -33,4 +37,8 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{
 		"token": t,
 	})
+}
+
+func Logout(c echo.Context) error {
+	return c.JSON(http.StatusAccepted, "")
 }
