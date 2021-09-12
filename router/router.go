@@ -15,12 +15,11 @@ func Setup(e *echo.Echo) {
 	// post routes
 	e.GET("/posts", controllers.GetAllPostsByFollowers)
 	e.POST("/posts/:id/comment", controllers.PostComment)
-	e.PATCH("/posts/:id/like", controllers.LikePost)
+	e.PATCH("/posts/:id/like", controllers.LikeOrUnlikePost)
 
 	// user routes
-	e.GET("users/:username", controllers.GetUserByUsername)
+	e.GET("user/:username", controllers.GetUserByUsername)
 	e.GET("users/:id", controllers.GetUserByUserId)
-	e.GET("users/:id/suggested", controllers.GetSuggestedIds)
 	e.PATCH("users/:id/follow", controllers.ToggleFollow)
 
 	// just for testing purposes

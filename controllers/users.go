@@ -35,34 +35,38 @@ func GetUserByUserId(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
-func GetSuggestedIds(c echo.Context) error {
-	userId := c.Param("id")
+func ToggleFollow(c echo.Context) error {
+	userIdWhoWantsToFollow := c.Param("id")
+	userWhoGetsFollowedOrUnfollowed := c.FormValue("id")
+
+	updateLoggedInUserFollowing(userIdWhoWantsToFollow, userWhoGetsFollowedOrUnfollowed)
+	updateFollowedUserFollowers(userWhoGetsFollowedOrUnfollowed, userIdWhoWantsToFollow)
+
+	return c.JSON(http.StatusOK, echo.Map{"followed": true})
+}
+
+func updateLoggedInUserFollowing(id string, followerId string) {
 	user := &models.User{}
 	err := DB.Model(user).
-		Where("id = ?", userId).
+		Where("id = ?", id).
 		Select()
 
 	if err != nil {
 		panic(err)
 	}
 
-	return c.JSON(http.StatusOK, user)
+	user.Following = append(user.Following, followerId)
 }
 
-func ToggleFollow(c echo.Context) error {
-	userIdWhoWantsToFollow := c.Param("id")
-	userWhoGetsFollowedOrUnfollowed := c.FormValue("id")
+func updateFollowedUserFollowers(id string, followingUserId string) {
+	user := &models.User{}
+	err := DB.Model(user).
+		Where("id = ?", id).
+		Select()
 
-	updateLoggedInUserFollowing(userIdWhoWantsToFollow)
-	updateFollowedUserFollowers(userWhoGetsFollowedOrUnfollowed)
+	if err != nil {
+		panic(err)
+	}
 
-	return c.JSON(http.StatusOK, echo.Map{"followed": true})
-}
-
-func updateLoggedInUserFollowing(id string) {
-
-}
-
-func updateFollowedUserFollowers(id string) {
-
+	user.Followers = append(user.Followers, followingUserId)
 }

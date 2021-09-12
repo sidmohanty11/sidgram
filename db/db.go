@@ -26,7 +26,7 @@ func ConnectDB() *pg.DB {
 	err := createSchema(db)
 
 	if err != nil {
-		panic(err)
+		return db
 	}
 
 	return db
