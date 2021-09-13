@@ -55,7 +55,13 @@ func updateLoggedInUserFollowing(id string, followerId string) {
 		panic(err)
 	}
 
-	user.Following = append(user.Following, followerId)
+	for idx, following := range user.Following {
+		if following == followerId {
+			user.Following = append(user.Following[:idx], user.Following[idx+1:]...)
+		} else {
+			user.Following = append(user.Following, followerId)
+		}
+	}
 }
 
 func updateFollowedUserFollowers(id string, followingUserId string) {
@@ -68,5 +74,11 @@ func updateFollowedUserFollowers(id string, followingUserId string) {
 		panic(err)
 	}
 
-	user.Followers = append(user.Followers, followingUserId)
+	for idx, follower := range user.Followers {
+		if follower == followingUserId {
+			user.Followers = append(user.Followers[:idx], user.Followers[idx+1:]...)
+		} else {
+			user.Followers = append(user.Followers, followingUserId)
+		}
+	}
 }

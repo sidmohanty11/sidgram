@@ -7,6 +7,7 @@ import (
 type User struct {
 	ID        uint      `pg:",pk" json:"id"`
 	Username  string    `pg:",notnull,unique" json:"username"`
+	Name      string    `pg:",notnull" json:"name"`
 	Email     string    `pg:",notnull,unique" json:"email"`
 	Password  string    `pg:",notnull" json:"-"`
 	Followers []string  `json:"followers"`

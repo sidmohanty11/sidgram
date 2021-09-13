@@ -12,6 +12,11 @@ import (
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
+
 	router.Setup(e)
 
 	database := db.ConnectDB()

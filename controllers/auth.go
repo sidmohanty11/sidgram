@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"backend/middlewares"
+	"backend/models"
 	"net/http"
 	"time"
 
@@ -10,16 +11,39 @@ import (
 )
 
 func Register(c echo.Context) error {
-	return c.JSON(http.StatusAccepted, "")
+	u := new(models.User)
+	if err := c.Bind(u); err != nil {
+		return err
+	}
+
+	_, err := DB.Model(u).Insert()
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusAccepted, u)
 }
 
 func Login(c echo.Context) error {
-	// username := c.FormValue("username")
-	// password := c.FormValue("password")
+	username := c.FormValue("username")
+	password := c.FormValue("password")
+
+	user := &models.User{}
+	err := DB.Model(user).
+		Where("username = ?", username).
+		Select()
+
+	if err != nil {
+		panic(err)
+	}
+
+	if user.Password != password {
+		return c.JSON(http.StatusUnauthorized, "")
+	}
 
 	// Set custom claims
 	claims := &middlewares.JwtCustomClaims{
-		"jon",
+		username,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
@@ -30,8 +54,9 @@ func Login(c echo.Context) error {
 
 	// Generate encoded token and send it as response.
 	t, err := token.SignedString([]byte("secret"))
+
 	if err != nil {
-		return err
+		panic(err)
 	}
 
 	return c.JSON(http.StatusOK, echo.Map{
