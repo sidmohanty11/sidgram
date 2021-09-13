@@ -13,9 +13,10 @@ func Hello(c echo.Context) error {
 
 func Test(c echo.Context) error {
 	user := &models.User{
-		Username: "sidm",
-		Password: "sidm",
-		Email:    "sidm",
+		Username: "sidm2",
+		Name:     "sidharth",
+		Password: "sidm2",
+		Email:    "sidm2",
 	}
 
 	res, err := DB.Model(user).Insert()

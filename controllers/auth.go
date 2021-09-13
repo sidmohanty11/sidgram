@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/helpers"
 	"backend/middlewares"
 	"backend/models"
 	"net/http"
@@ -8,42 +9,68 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Register(c echo.Context) error {
-	u := new(models.User)
-	if err := c.Bind(u); err != nil {
+	user := &models.User{}
+	if err := c.Bind(user); err != nil {
 		return err
 	}
 
-	_, err := DB.Model(u).Insert()
+	hash, err := helpers.HashPassword(user.Password)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusAccepted, u)
+	user.Password = hash
+
+	_, err = DB.Model(user).Insert()
+
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusAccepted, user)
+	// 	{
+	//     "username": "sidm",
+	//     "password": "sidm",
+	//     "name": "sidm",
+	//     "email": "sidm@sidm.com"
+	// }
 }
 
 func Login(c echo.Context) error {
-	username := c.FormValue("username")
-	password := c.FormValue("password")
+	type LoginCred struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	lc := &LoginCred{}
+	if err := c.Bind(lc); err != nil {
+		return c.JSON(http.StatusUnauthorized, echo.Map{"status": "unauthorized", "err": err.Error()})
+	}
 
 	user := &models.User{}
 	err := DB.Model(user).
-		Where("username = ?", username).
+		Where("username = ?", lc.Username).
 		Select()
 
 	if err != nil {
-		panic(err)
+		return c.JSON(http.StatusUnauthorized, echo.Map{"status": "unauthorized", "err": err.Error()})
 	}
 
-	if user.Password != password {
-		return c.JSON(http.StatusUnauthorized, "")
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(lc.Password))
+
+	if err == bcrypt.ErrMismatchedHashAndPassword {
+		return c.JSON(http.StatusUnauthorized, echo.Map{"status": "unauthorized", "err": err.Error()})
+	} else if err != nil {
+		return c.JSON(http.StatusUnauthorized, echo.Map{"status": "unauthorized", "err": err.Error()})
 	}
 
 	// Set custom claims
 	claims := &middlewares.JwtCustomClaims{
-		username,
+		lc.Username,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
@@ -65,5 +92,5 @@ func Login(c echo.Context) error {
 }
 
 func Logout(c echo.Context) error {
-	return c.JSON(http.StatusAccepted, "")
+	return c.JSON(http.StatusAccepted, echo.Map{"logout": "successful"})
 }

@@ -13,7 +13,7 @@ func Setup(e *echo.Echo) {
 	e.POST("/logout", controllers.Logout)
 
 	// post routes
-	e.GET("/posts", controllers.GetAllPostsByFollowers)
+	e.GET("/posts/:id", controllers.GetAllPostsByFollowers)
 	e.POST("/posts/:id/comment", controllers.PostComment)
 	e.PATCH("/posts/:id/like", controllers.LikeOrUnlikePost)
 

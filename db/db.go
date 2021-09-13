@@ -14,7 +14,7 @@ func ConnectDB() *pg.DB {
 		Addr:     ":5432",
 		User:     "postgres",
 		Password: "postgres",
-		Database: "instagram-api",
+		Database: "instagram",
 	})
 
 	ctx := context.Background()

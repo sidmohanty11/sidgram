@@ -6,7 +6,7 @@ import (
 
 type Post struct {
 	ID          uint       `pg:",pk" json:"id"`
-	UserId      uint       `pg:"rel:has-one" json:"user_id"`
+	User        *User      `pg:"rel:has-one" json:"user"`
 	Description string     `json:"description"`
 	PostImage   string     `json:"post_image"`
 	Comments    []*Comment `pg:"rel:has-many,join_fk:id" json:"comments"`
