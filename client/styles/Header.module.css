@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.liTag {
+  cursor: pointer;
+  margin: 8px;
+}
+
+.rounded {
+  border-radius: 100%;
+}

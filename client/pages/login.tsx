@@ -4,7 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import React from "react";
 import { Formik } from "formik";
-import styles from "../styles/Login.module.css";
+import styles from "@styles/Login.module.css";
 
 const Login: NextPage = () => {
   return (
