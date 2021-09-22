@@ -12,10 +12,10 @@ const Header: FC = () => {
       <nav className={styles.navbar}>
         <ul>
           <li className={styles.liTag}>
-            <HomeSVG />
+            <AddSVG />
           </li>
           <li className={styles.liTag}>
-            <AddSVG />
+            <HomeSVG />
           </li>
           <li className={styles.liTag}>
             <Image
