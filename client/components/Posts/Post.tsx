@@ -4,6 +4,7 @@ import { InferGetStaticPropsType } from "next";
 import React, { FC } from "react";
 import PostDesc from "./PostDesc";
 import PostHeader from "./PostHeader";
+import Comment from "../Comments";
 
 interface Props {
   post: PostType;
@@ -25,6 +26,9 @@ const Post: FC<Props> = ({ post }) => {
         alt=""
       />
       <PostDesc post={post} />
+      {post.comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
+      ))}
     </Card>
   );
 };

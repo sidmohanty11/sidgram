@@ -5,5 +5,11 @@ export interface PostType {
   description: string;
   photo_url: string;
   timestamp: string;
-  comments: [{ id: number; username: string; comment: string }];
+  comments: CommentType[];
+}
+
+export interface CommentType {
+  id: number;
+  username: string;
+  comment: string;
 }

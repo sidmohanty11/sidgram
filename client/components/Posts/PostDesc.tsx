@@ -9,6 +9,7 @@ interface Props {
 const PostDesc: FC<Props> = ({ post }) => {
   return (
     <article>
+      <p className={styles.timestamp}>{post.timestamp}</p>
       <div className={styles.anotherContainer}>
         <HeartNotLikedSVG />
         <CommentSVG />
@@ -17,7 +18,6 @@ const PostDesc: FC<Props> = ({ post }) => {
         <h3>{post.username}</h3>
         <p className={styles.description}>{post.description}</p>
       </div>
-      <p className={styles.timestamp}>{post.timestamp}</p>
     </article>
   );
 };
