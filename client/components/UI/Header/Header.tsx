@@ -1,9 +1,13 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import styles from "@styles/Header.module.css";
 import Image from "next/image";
 import { AddSVG, HomeSVG } from "../../Icons";
 
-const Header: FC = () => {
+type PropType = {
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
+};
+
+const Header: FC<PropType> = ({ setOpenModal }) => {
   return (
     <header className={styles.header}>
       <div>
@@ -11,7 +15,10 @@ const Header: FC = () => {
       </div>
       <nav className={styles.navbar}>
         <ul>
-          <li className={styles.liTag}>
+          <li
+            className={styles.liTag}
+            onClick={() => setOpenModal((prevState) => !prevState)}
+          >
             <AddSVG />
           </li>
           <li className={styles.liTag}>

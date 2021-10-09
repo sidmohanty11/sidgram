@@ -1,0 +1,51 @@
+.modalBody {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modalFooter {
+  float: right;
+  background-color: indigo;
+  border: 1px solid indigo;
+  padding: 5px 12px;
+  margin: 8px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.photoUrl {
+  display: block;
+  margin: auto;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 8px 12px;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+.storyContent {
+  display: block;
+  margin: auto;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 8px 12px;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+.modalContent {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 50px 20px;
+  border: 1px solid #888;
+  width: 60%;
+}
