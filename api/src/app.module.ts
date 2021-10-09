@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
-import { UsersEntity } from './users/users.entity';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [
@@ -13,14 +13,14 @@ import { UsersModule } from './users/users.module';
       url: 'mongodb://localhost/sidgram',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [UsersEntity],
+      entities: [User],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
-    AuthModule,
     PostsModule,
-    UsersModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
